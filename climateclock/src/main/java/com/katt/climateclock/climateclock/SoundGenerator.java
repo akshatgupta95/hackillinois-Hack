@@ -156,8 +156,9 @@ public class SoundGenerator {
      * @return String of the path of the sound file
      */
     public String soundPath(WeatherTypes weatherCondition){
-        if(weatherCondition == WeatherTypes.RAIN) return randomSoundFromDirectory("/res/sounds/Rain");
-
-        return null;
+        if(weatherCondition == WeatherTypes.RAIN){
+            return randomSoundFromDirectory("/res/sounds/Rain");
+        }
+        return "";
     }
 }
