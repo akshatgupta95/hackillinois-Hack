@@ -66,7 +66,7 @@ public class SoundGenerator {
             return WeatherTypes.RAIN;
         }
         if(currWeather == WeatherSummary.STORMY){
-           return WeatherTypes.STORMY   ;
+           return WeatherTypes.STORMY;
         }
         if(currWeather == WeatherSummary.CLOUDY ||
                 currWeather == WeatherSummary.FEW_CLOUDS ||
