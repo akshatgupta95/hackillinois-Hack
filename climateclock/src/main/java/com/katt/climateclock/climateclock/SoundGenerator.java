@@ -2,6 +2,8 @@ package com.katt.climateclock.climateclock;
 import android.provider.Settings;
 
 import it.octograve.weatherlib.*;
+
+import java.io.File;
 import java.lang.*;
 
 
@@ -126,5 +128,17 @@ public class SoundGenerator {
     private String layerSounds(String sound1, String sound2, int time)
     {
 	return "Hello world";
+    }
+
+   
+
+    /*
+     * @param WeatherType
+     * @return String of the path of the sound file
+     */
+    public String soundPath(WeatherTypes weatherCondition){
+        if(weatherCondition == WeatherTypes.RAIN) return randomSoundFromDirectory("/res/sounds/Rain");
+
+        return null;
     }
 }
