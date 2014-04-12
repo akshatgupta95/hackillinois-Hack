@@ -26,24 +26,25 @@ public class AlarmManagerActivity extends Activity{
     {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.activity_main);
-
-        mTimePicker.setIs24HourView();
+        
+        mTimePicker = (TimePicker) findViewById(R.id.timePicker);
+        mTimePicker.setIs24HourView(true);
         mStartBtn = (Button) findViewById(R.id.btnSetAlarm);
-        mTimePicker = (EditText) findViewById(R.id.timePicker);
+
 
         mStartBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 try
                 {
-                    int h = Integer.parseInt(mTimePicker.getCurrentHour());
-                    int m = Integer.parseInt(mTimePicker.getCurrentMinute());
+                    int h = mTimePicker.getCurrentHour();
+                    int m = mTimePicker.getCurrentMinute();
                     Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
                         intent, PendingIntent.FLAG_CANCEL_CURRENT);
                     int ms = (h * 3600 * 1000) + (m * 60 * 1000);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    am.setExact(AlarmManager.RTC_WAKEUP, (long) ms, pendingIntent );
+                    am.setExact(AlarmManager.RTC_WAKEUP, (long) ms, pendingIntent);
 
                     if (mToast != null)
                         mToast.cancel();
