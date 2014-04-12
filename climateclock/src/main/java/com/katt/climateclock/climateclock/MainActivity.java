@@ -1,5 +1,6 @@
 package com.katt.climateclock.climateclock;
 
+
 import java.util.Locale;
 
 import android.support.v7.app.ActionBarActivity;
