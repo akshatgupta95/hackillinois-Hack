@@ -18,7 +18,7 @@ import android.widget.Toast;
  */
 public class AlarmManagerActivity extends Activity{
     private Button mStartBtn;
-    private EditText mTimeSetter;
+    private TimePicker mTimePicker;
     private Toast mToast;
 
     @Override
@@ -27,25 +27,28 @@ public class AlarmManagerActivity extends Activity{
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.activity_main);
 
+        mTimePicker.setIs24HourView();
         mStartBtn = (Button) findViewById(R.id.btnSetAlarm);
-        mTimeSetter = (EditText) findViewById(R.id.timeSetter);
+        mTimePicker = (EditText) findViewById(R.id.timePicker);
 
         mStartBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 try
                 {
-                    int i = Integer.parseInt(mTimeSetter.getText().toString());
+                    int h = Integer.parseInt(mTimePicker.getCurrentHour());
+                    int m = Integer.parseInt(mTimePicker.getCurrentMinute());
                     Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
                         intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    int ms = (h * 3600 * 1000) + (m * 60 * 1000);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    am.set(AlarmManager.RTC_WAKEUP, (long) (i *1000 * 60), pendingIntent);
+                    am.setExact(AlarmManager.RTC_WAKEUP, (long) ms, pendingIntent );
 
                     if (mToast != null)
                         mToast.cancel();
                     mToast = Toast.makeText(getApplicationContext(),
-                            "Alarm has been set for " + i, Toast.LENGTH_LONG);
+                            "Alarm has been set for " + h + ":" + m, Toast.LENGTH_LONG);
                     mToast.show();
                 }
                 catch (NumberFormatException e)
