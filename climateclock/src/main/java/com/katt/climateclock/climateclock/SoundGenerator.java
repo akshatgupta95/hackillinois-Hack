@@ -5,6 +5,10 @@ import it.octograve.weatherlib.*;
 
 import java.io.File;
 import java.lang.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.io.File;
+import java.util.Random;
 
 
 /**
@@ -87,7 +91,22 @@ public class SoundGenerator {
         return null;
     }
 
-
+    /*
+     * Chooses a random sound file from a folder.
+     * @param A string representing the path to the directory.
+     * @Return A string representing the path to the specific music file.
+     */
+    private String randomSoundFromDirectory(String directoryPath)
+    {
+        List<String> fileList = new ArrayList<String>();
+        File folder = new File(directoryPath);
+        File[] files = folder.listFiles();
+        for (File file : files){
+            fileList.add(file.getPath());
+        }
+        Random randomGenerator = new Random();
+        return fileList.get(randomGenerator.nextInt(fileList.size()));
+    }
 
     public float getTemp(){
         return station.getWeather().getTemperature();
