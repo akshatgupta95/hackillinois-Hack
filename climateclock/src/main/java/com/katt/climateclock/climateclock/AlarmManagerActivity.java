@@ -26,7 +26,7 @@ public class AlarmManagerActivity extends Activity{
     {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.activity_main);
-        
+
         mTimePicker = (TimePicker) findViewById(R.id.timePicker);
         mTimePicker.setIs24HourView(true);
         mStartBtn = (Button) findViewById(R.id.btnSetAlarm);
