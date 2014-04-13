@@ -35,6 +35,7 @@ public class AlarmManagerActivity extends Activity{
         mTimePicker.setIs24HourView(true);
         mStartBtn = (Button) findViewById(R.id.btnSetAlarm);
         mStopBtn = (Button) findViewById(R.id.btnStopAlarm);
+        mRepeatCheck = (CheckBox) findViewById(R.id.repeatCheck);
 
 
         mStartBtn.setOnClickListener(new OnClickListener() {
@@ -58,7 +59,8 @@ public class AlarmManagerActivity extends Activity{
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                     if (!mRepeatCheck.isChecked())
                     {
-                        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        //am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
                     }
                     else
                     {

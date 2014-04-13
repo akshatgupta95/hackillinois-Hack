@@ -118,7 +118,7 @@ public class SoundGenerator {
     private String randomSoundFromDirectory(String[] resources)
     {
         Random randomGenerator = new Random();
-        return resources[randomGenerator.nextInt(resources.length) + 1];
+        return resources[randomGenerator.nextInt(resources.length)];
     }
 
     public float getTemp(){
@@ -143,7 +143,7 @@ public class SoundGenerator {
         Wave base = new Wave();
         Wave bird1 = new Wave();
 
-        generationer.generateHeader(base, Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/rain") );
+        generationer.generateHeader(base, "empty" );
         generationer.generateHeader(bird1, soundPath(Weathers.BIRD) );
         generationer.overlay(base, bird1, 4);
 
@@ -186,27 +186,22 @@ public class SoundGenerator {
      * @param WeatherType
      * @return String of the path of the sound file
      */
-    private Uri soundPath(Weathers weatherType){
+    private String soundPath(Weathers weatherType){
         if(weatherType == Weathers.RAIN){
-            return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                    randomSoundFromDirectory(soundResources.rain)));
+            return randomSoundFromDirectory(soundResources.rain);
         }
         if (weatherType == Weathers.WIND) {
-        return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                randomSoundFromDirectory(soundResources.wind)));
+            return randomSoundFromDirectory(soundResources.wind);
         }
 
         if (weatherType == Weathers.SUNNY) {
-            return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                    randomSoundFromDirectory(soundResources.sunny)));
+            return randomSoundFromDirectory(soundResources.sunny);
         }
 
         if (weatherType == Weathers.BIRD) {
-            return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                    randomSoundFromDirectory(soundResources.bird)));
+            return randomSoundFromDirectory(soundResources.bird);
         }
-        return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                randomSoundFromDirectory(soundResources.rain)));
+        return randomSoundFromDirectory(soundResources.rain);
     }
 
     /*
@@ -214,12 +209,12 @@ public class SoundGenerator {
      * weather path.
      * @return A string to the path.
      */
-    public Uri getSoundPath(){
+    public String getSoundPath(){
 
         return soundPath(Weathers.RAIN);
     }
 
-    public Uri getRainPath(){
+    public String getRainPath(){
 
         return soundPath(Weathers.BIRD);
     }

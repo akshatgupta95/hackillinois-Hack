@@ -19,10 +19,9 @@ public class Generator extends Activity{
 
     //Get the context using the getContext instruction, the filename is the name of the wave file
     //for example if file is "rainy.wav" parameter would be "rainy"
-    public void generateHeader(Wave wavFile, Uri uriPath) {
+    public void generateHeader(Wave wavFile, String path) {
 
-        FileInputStream in;
-        File wave = new File(uriPath.toString());
+        InputStream in = getResources().openRawResource(getResources().getIdentifier(path,"raw", getPackageName()));
         char firstByte;
         char secondByte;
         char thirdByte;
@@ -32,7 +31,169 @@ public class Generator extends Activity{
         try {
 
 
-            in = new FileInputStream(wave);
+
+            wavFile.RIFF[0] = (char) in.read();
+
+            wavFile.RIFF[1] = (char) in.read();
+
+            wavFile.RIFF[2] = (char) in.read();
+
+            wavFile.RIFF[3] = (char) in.read();
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            thirdByte = (char) in.read();
+
+            fourthByte = (char) in.read();
+
+            wavFile.chunkSize = little_endian_4(firstByte, secondByte, thirdByte, fourthByte);
+
+            wavFile.WAVE[0] = (char) in.read();
+
+            wavFile.WAVE[1] = (char) in.read();
+
+            wavFile.WAVE[2] = (char) in.read();
+
+            wavFile.WAVE[3] = (char) in.read();
+
+            wavFile.fmt[0] = (char) in.read();
+
+            wavFile.fmt[1] = (char) in.read();
+
+            wavFile.fmt[2] = (char) in.read();
+
+            wavFile.fmt[3] = (char) in.read();
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            thirdByte = (char) in.read();
+
+            fourthByte = (char) in.read();
+
+            wavFile.subchunk1Size = little_endian_4(firstByte, secondByte, thirdByte, fourthByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            wavFile.audioFormat = little_endian_2(firstByte, secondByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            wavFile.numChan = little_endian_2(firstByte, secondByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            thirdByte = (char) in.read();
+
+            fourthByte = (char) in.read();
+
+            wavFile.samplesPerSec = little_endian_4(firstByte, secondByte, thirdByte, fourthByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            thirdByte = (char) in.read();
+
+            fourthByte = (char) in.read();
+
+            wavFile.bytesPerSec = little_endian_4(firstByte, secondByte, thirdByte, fourthByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            wavFile.blockAlign = little_endian_2(firstByte, secondByte);
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            wavFile.bitsPerSample = little_endian_2(firstByte, secondByte);
+
+            wavFile.extra = new char[wavFile.subchunk1Size - 16];
+
+            int i = 0;
+
+            while( i < wavFile.extra.length){
+
+                wavFile.extra[i] = (char) in.read();
+                i++;
+
+            }
+
+            wavFile.subchunk2ID[0] = (char) in.read();
+
+            wavFile.subchunk2ID[1] = (char) in.read();
+
+            wavFile.subchunk2ID[2] = (char) in.read();
+
+            wavFile.subchunk2ID[3] = (char) in.read();
+
+            firstByte = (char) in.read();
+
+            secondByte = (char) in.read();
+
+            thirdByte = (char) in.read();
+
+            fourthByte = (char) in.read();
+
+            wavFile.subchunk2Size = little_endian_4(firstByte, secondByte, thirdByte, fourthByte);
+            //   System.out.println(wavFile.subchunk2Size);
+            //  System.out.println(wavFile.audioFormat);
+            // System.out.println(wavFile.bitsPerSample);
+            // System.out.println(wavFile.numChan);
+
+            wavFile.sizeOfData = (wavFile.subchunk2Size*8/wavFile.bitsPerSample*wavFile.numChan);
+
+            wavFile.data = new short[wavFile.sizeOfData];
+
+            for(i = 0; i < wavFile.sizeOfData; i++) {
+
+                firstByte = (char) in.read();
+
+                secondByte = (char) in.read();
+
+                wavFile.data[i] = little_endian_2(firstByte,secondByte);
+
+            }
+
+
+            System.out.println("Data[5] = "+ wavFile.data[5]);
+
+            System.out.println("Wave File has been Read!");
+
+        } catch(Exception e) {
+
+            System.out.println("There is a file error");
+            e.printStackTrace();
+
+        }
+
+
+    }
+
+    public void generateHeader(Wave wavFile, String path) {
+
+        InputStream in = getResources().openRawResource(getResources().getIdentifier(path,"raw", getPackageName()));
+        char firstByte;
+        char secondByte;
+        char thirdByte;
+        char fourthByte;
+
+
+        try {
+
+
 
             wavFile.RIFF[0] = (char) in.read();
 
