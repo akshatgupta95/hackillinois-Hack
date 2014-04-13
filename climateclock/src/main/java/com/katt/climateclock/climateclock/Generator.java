@@ -182,9 +182,10 @@ public class Generator extends Activity{
 
     }
 
-    public void generateHeader(Wave wavFile, String path) {
+    public void generateHeader(Wave wavFile, Uri uriPath) {
 
-        InputStream in = getResources().openRawResource(getResources().getIdentifier(path,"raw", getPackageName()));
+        FileInputStream in;
+        File wave = new File(uriPath.toString());
         char firstByte;
         char secondByte;
         char thirdByte;
@@ -193,7 +194,7 @@ public class Generator extends Activity{
 
         try {
 
-
+            in = 
 
             wavFile.RIFF[0] = (char) in.read();
 
