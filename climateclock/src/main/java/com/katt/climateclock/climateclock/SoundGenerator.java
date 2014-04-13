@@ -138,12 +138,34 @@ public class SoundGenerator {
      */
     public void generate()
     {
-        Generator generate = new Generator();
+        Generator generationer = new Generator();
+
+        Wave base = new Wave();
+        Wave bird1 = new Wave();
+
+        generationer.generateHeader(base, Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/rain") );
+        generationer.generateHeader(bird1, soundPath(Weathers.BIRD) );
+        generationer.overlay(base, bird1, 4);
+
+        int[] time = new int[40];
+
+        time = generateTimes(50,40);
+
+        int i = 0;
+
+        File file = new File("/music/output.wav");
+        Wave output = new Wave();
+        generationer.generateHeader(output, Uri.parse(file.toString()));
 
 
+        while(i < time.length) {
 
+            Wave birdTemp = new Wave();
+            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD) );
+            generationer.overlay(output, birdTemp, time[i]);
 
-
+            i++;
+        }
 
     }
 
