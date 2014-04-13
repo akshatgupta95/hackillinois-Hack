@@ -72,6 +72,7 @@ public class AlarmReceiverActivity extends Activity {
                     mMediaPlayer.prepare();
                     mMediaPlayer.start();
                 }
+                
             }
             catch (IOException e)
             {
