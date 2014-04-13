@@ -53,6 +53,8 @@ public class AlarmManagerActivity extends Activity{
                     calendar.set(Calendar.HOUR_OF_DAY, h);
                     calendar.set(Calendar.MINUTE, m);
 
+
+
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                     if (!mRepeatCheck.isChecked())
                     {
@@ -89,7 +91,7 @@ public class AlarmManagerActivity extends Activity{
                             intent, 0);
 
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-
+                clear(am, pendingIntent);
 
                 if (mToast == null)
                 {
@@ -109,5 +111,13 @@ public class AlarmManagerActivity extends Activity{
         });
 
 
+
+
+    }
+    private void clear(AlarmManager a, PendingIntent p)
+    {
+        if (a!= null) {
+            a.cancel(p);
+        }
     }
 }
