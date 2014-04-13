@@ -18,7 +18,7 @@ import android.net.Uri;
  */
 public class SoundGenerator {
     private class Sounds{
-        String[] rain = {"Rain", "Snow"};
+        String[] rain = {"rain", "snow"};
     }
     /*
      * Holds all the sound bindings.
@@ -165,10 +165,10 @@ public class SoundGenerator {
      */
     private Uri soundPath(WeatherTypes weatherCondition){
         if(weatherCondition == WeatherTypes.RAIN){
-            return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw" +
+            return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" +
                     randomSoundFromDirectory(soundResources.rain));
         }
-        return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw" +
+        return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" +
                 randomSoundFromDirectory(soundResources.rain));
     }
 
