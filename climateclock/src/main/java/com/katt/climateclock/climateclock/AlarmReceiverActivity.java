@@ -58,11 +58,11 @@ public class AlarmReceiverActivity extends Activity {
         private void playSound(Context context, Uri alert) {
             mMediaPlayer = new MediaPlayer();
 
-            SoundGenerator testAudio = new SoundGenerator("Tokyo");
+            SoundGenerator testAudio = new SoundGenerator();
 
             try
             {
-                Uri soundPath = Uri.fromFile(new File(testAudio.getSoundPath()));
+                Uri soundPath = Uri.fromFile(new File(testAudio.getRainPath()));
                 mMediaPlayer.setDataSource(context, soundPath);
                 final AudioManager audioManager =
                         (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

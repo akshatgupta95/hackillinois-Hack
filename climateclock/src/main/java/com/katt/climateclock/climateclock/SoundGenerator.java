@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Random;
+import android.net.Uri;
 
 
 /**
@@ -37,6 +38,12 @@ public class SoundGenerator {
         if(station == null){
             System.err.println("Could not get the the station");
         }
+    }
+
+    public SoundGenerator(){
+        StationsList list = null;
+
+        station = null;
     }
     /*
      * Enum for storing different weather types.
@@ -96,13 +103,13 @@ public class SoundGenerator {
      * @param A string representing the path to the directory.
      * @Return A string representing the path to the specific music file.
      */
-    private String randomSoundFromDirectory(String directoryPath)
+    private Uri randomSoundFromDirectory(Uri directoryPath)
     {
-        List<String> fileList = new ArrayList<String>();
-        File folder = new File(directoryPath);
-        File[] files = folder.listFiles();
-        for (File file : files){
-            fileList.add(file.getPath());
+        List<Uri> fileList = new ArrayList<String>();
+
+        Field[] fields=R.class.getFields();
+        for(int count=0; count < fields.length; count++){
+            Log.i("Raw Asset: ", fields[count].getName());
         }
         Random randomGenerator = new Random();
         return fileList.get(randomGenerator.nextInt(fileList.size()));
@@ -155,11 +162,11 @@ public class SoundGenerator {
      * @param WeatherType
      * @return String of the path of the sound file
      */
-    private String soundPath(WeatherTypes weatherCondition){
+    private Uri soundPath(WeatherTypes weatherCondition){
         if(weatherCondition == WeatherTypes.RAIN){
-            return randomSoundFromDirectory("/res/sounds/Rain");
+            return randomSoundFromDirectory(Uri.parse("android.resource://com.katt.climateclock.climateclock/sound.Rain"));
         }
-        return randomSoundFromDirectory("/res/sounds/Rain");
+        return randomSoundFromDirectory(Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" + sring[2]));
     }
 
     /*
@@ -167,8 +174,13 @@ public class SoundGenerator {
      * weather path.
      * @return A string to the path.
      */
-    public String getSoundPath(){
+    public Uri getSoundPath(){
         WeatherTypes currWeatherType = getWeather();
+        return soundPath(currWeatherType);
+    }
+
+    public Uri getRainPath(){
+        WeatherTypes currWeatherType = WeatherTypes.RAIN;
         return soundPath(currWeatherType);
     }
 }
