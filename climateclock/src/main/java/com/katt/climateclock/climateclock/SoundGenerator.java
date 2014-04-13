@@ -72,6 +72,8 @@ public class SoundGenerator {
 
         Double rain = dataReader.getCurrentData().getRainRateHourlyMm();
 
+
+
         if(windspeed >= 10){
 
             isWindy = true;
@@ -122,9 +124,10 @@ public class SoundGenerator {
      */
     public void generate()
     {
-        Generator generate
+        Generator generate = new Generator();
 
          if (isRainy){
+
 
 
          }
@@ -166,6 +169,7 @@ public class SoundGenerator {
             return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
                     randomSoundFromDirectory(soundResources.rain)));
         }
+        if (isWindy)
         return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
                 randomSoundFromDirectory(soundResources.rain)));
     }
