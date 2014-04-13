@@ -17,6 +17,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.io.File;
 
 
 /**
@@ -54,9 +57,13 @@ public class AlarmReceiverActivity extends Activity {
 
         private void playSound(Context context, Uri alert) {
             mMediaPlayer = new MediaPlayer();
+
+            SoundGenerator testAudio = new SoundGenerator("Tokyo");
+
             try
             {
-                mMediaPlayer.setDataSource(context, alert);
+                Uri soundPath = Uri.fromFile(new File(testAudio.getSoundPath()));
+                mMediaPlayer.setDataSource(context, soundPath);
                 final AudioManager audioManager =
                         (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 if(audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0)
@@ -70,6 +77,7 @@ public class AlarmReceiverActivity extends Activity {
             {
                 Log.i("AlarmReceiver", "No audio files are found!");
             }
+
         }
 
         private Uri getAlarmUri() {

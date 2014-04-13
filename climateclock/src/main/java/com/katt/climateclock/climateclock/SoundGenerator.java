@@ -155,10 +155,20 @@ public class SoundGenerator {
      * @param WeatherType
      * @return String of the path of the sound file
      */
-    public String soundPath(WeatherTypes weatherCondition){
+    private String soundPath(WeatherTypes weatherCondition){
         if(weatherCondition == WeatherTypes.RAIN){
             return randomSoundFromDirectory("/res/sounds/Rain");
         }
-        return "";
+        return randomSoundFromDirectory("/res/sounds/Rain");
+    }
+
+    /*
+     * Return the path to the sound file created by the mixer. Right now it only returns the
+     * weather path.
+     * @return A string to the path.
+     */
+    public String getSoundPath(){
+        WeatherTypes currWeatherType = getWeather();
+        return soundPath(currWeatherType);
     }
 }
