@@ -11,6 +11,11 @@ import java.io.File;
 import java.util.Random;
 import android.net.Uri;
 
+import de.jartist.weather.wunderground.api.domain.DataSet;
+import de.jartist.weather.wunderground.api.domain.WeatherStation;
+import de.jartist.weather.wunderground.api.domain.WeatherStations;
+import de.jartist.weather.wunderground.impl.services.HttpDataReaderService;
+
 
 /**
  * Created by Thomas on 4/12/14. A class that can generate a sound
@@ -18,91 +23,77 @@ import android.net.Uri;
  */
 public class SoundGenerator {
     private class Sounds{
-        String[] rain = {"rain", "snow"};
+        String[] rain = {"rain"};
+        String[] bird = {"birds", "birds2", "birds3", "birds4"};
+        String[] sunny = {"sunny"};
+        String[] wind = {"wind", "snow"};
     }
     /*
      * Holds all the sound bindings.
      */
     Sounds soundResources = new Sounds();
 
-    /*
-     * Declaring a station so that it can be used throughout the class
-     */
-    public Station station;
+
     /*
     * Default constructor to initialize the current station
      */
     public SoundGenerator(String location){
-        StationsList list = null;
-        try{
-            list = StationsList.fetchStationsList();
-        }
-        catch(WeatherException e){
-            System.err.println("Unable to fetch list");
-        }
 
-        station = list.getByLocation(location);
-        if(station == null){
-            System.err.println("Could not get the the station");
-        }
     }
 
     public SoundGenerator(){
-        StationsList list = null;
 
-        station = null;
+
+
     }
-    /*
-     * Enum for storing different weather types.
-     */
-    public enum WeatherTypes{SUNNY, RAIN, SNOW, CLOUDY, STORMY};
 
     /*
      * Keeps track of whether we should put wind on the sound file.
      */
     boolean isWindy = false;
+    boolean isRainy = false;
+    boolean isSunny = false;
     
     /*
      * Fetch the weather.
      * @return A Weather that corresponds to the best match for
      * weather.
      */
-    public WeatherTypes getWeather()
+    public void getWeather()
     {
 
-        try{
-            station.updateWeather();
-        }
-        catch(WeatherException e){
-            System.err.println("Could not get weather");
-            return null;
-        }
 
-        WeatherSummary currWeather = station.getWeather().summary();
-        if(station.getWeather().getWindMaxSpeed() > 10){
+        WeatherStation aWeatherStation = new WeatherStation("KILURBAN8");
+
+        HttpDataReaderService dataReader = new HttpDataReaderService();
+        dataReader.setWeatherStation(aWeatherStation );
+
+        Double currentTemperature = dataReader.getCurrentData().getTemperature();
+
+        Double windspeed = dataReader.getCurrentData().getWindspeedAvgKmh();
+
+        Double rain = dataReader.getCurrentData().getRainRateHourlyMm();
+
+        if(windspeed >= 10){
+
             isWindy = true;
-        }
-        if(currWeather == WeatherSummary.RAINY){
-            return WeatherTypes.RAIN;
-        }
-        if(currWeather == WeatherSummary.STORMY){
-           return WeatherTypes.STORMY;
-        }
-        if(currWeather == WeatherSummary.CLOUDY ||
-                currWeather == WeatherSummary.FEW_CLOUDS ||
-                currWeather == WeatherSummary.OVERCAST){
-            return WeatherTypes.CLOUDY;
-        }
-        if (currWeather == WeatherSummary.SNOWY || currWeather == WeatherSummary.ICY ){
-            return WeatherTypes.SNOW;
-        }
-        if (currWeather == WeatherSummary.SUNNY ||
-                currWeather == WeatherSummary.NOT_AVAILABLE ||
-             currWeather == WeatherSummary.WINDY){
-            return WeatherTypes.SUNNY;
+
         }
 
-        return null;
+        if(rain > 1 ) {
+
+            isRainy = true;
+
+        }
+
+        if(rain == 0) {
+
+            isSunny = true;
+
+        }
+
+
+
     }
 
     /*
@@ -117,7 +108,7 @@ public class SoundGenerator {
     }
 
     public float getTemp(){
-        return station.getWeather().getTemperature();
+        return 0;
     }
 
     /*
@@ -125,7 +116,7 @@ public class SoundGenerator {
      */
     public void updateSettings()
     {
-
+       //TO be added
     }
 
     /*
@@ -133,6 +124,15 @@ public class SoundGenerator {
      */
     public void generate()
     {
+        Generator generate
+
+         if (isRainy){
+
+
+         }
+
+
+
 
     }
 
@@ -163,8 +163,8 @@ public class SoundGenerator {
      * @param WeatherType
      * @return String of the path of the sound file
      */
-    private Uri soundPath(WeatherTypes weatherCondition){
-        if(weatherCondition == WeatherTypes.RAIN){
+    private Uri soundPath(){
+        if(isRainy){
             return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
                     randomSoundFromDirectory(soundResources.rain)));
         }
@@ -178,12 +178,12 @@ public class SoundGenerator {
      * @return A string to the path.
      */
     public Uri getSoundPath(){
-        WeatherTypes currWeatherType = getWeather();
-        return soundPath(currWeatherType);
+
+        return soundPath();
     }
 
     public Uri getRainPath(){
-        WeatherTypes currWeatherType = WeatherTypes.RAIN;
-        return soundPath(currWeatherType);
+
+        return soundPath();
     }
 }
