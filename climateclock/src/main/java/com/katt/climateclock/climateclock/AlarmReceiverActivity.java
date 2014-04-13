@@ -82,8 +82,8 @@ public class AlarmReceiverActivity extends Activity {
         }
 
     private Uri getAlarmUri() {
-        SoundGenerator testAudio = new SoundGenerator();
-        Uri alert = testAudio.getRainPath();
+        SoundGenerator testAudio = new SoundGenerator("Tokyo");
+        Uri alert = testAudio.getSoundPath();
         if (alert == null){
             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             if (alert == null)
