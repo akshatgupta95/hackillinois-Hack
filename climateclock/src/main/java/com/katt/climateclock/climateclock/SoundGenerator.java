@@ -31,32 +31,18 @@ public class SoundGenerator {
      */
     Sounds soundResources = new Sounds();
 
-    /*
-     * Declaring a station so that it can be used throughout the class
-     */
-    public Station station;
+
     /*
     * Default constructor to initialize the current station
      */
     public SoundGenerator(String location){
-        StationsList list = null;
-        try{
-            list = StationsList.fetchStationsList();
-        }
-        catch(WeatherException e){
-            System.err.println("Unable to fetch list");
-        }
 
-        station = list.getByLocation(location);
-        if(station == null){
-            System.err.println("Could not get the the station");
-        }
     }
 
     public SoundGenerator(){
-        StationsList list = null;
 
-        station = null;
+
+
     }
 
     /*
@@ -120,7 +106,7 @@ public class SoundGenerator {
     }
 
     public float getTemp(){
-        return station.getWeather().getTemperature();
+        return 0;
     }
 
     /*
@@ -136,8 +122,12 @@ public class SoundGenerator {
      */
     public void generate()
     {
+        Generator generate
 
-         
+         if (isRainy){
+
+
+         }
 
 
 
@@ -171,8 +161,8 @@ public class SoundGenerator {
      * @param WeatherType
      * @return String of the path of the sound file
      */
-    private Uri soundPath(WeatherTypes weatherCondition){
-        if(weatherCondition == WeatherTypes.RAIN){
+    private Uri soundPath(){
+        if(isRainy){
             return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
                     randomSoundFromDirectory(soundResources.rain)));
         }
@@ -186,12 +176,12 @@ public class SoundGenerator {
      * @return A string to the path.
      */
     public Uri getSoundPath(){
-        WeatherTypes currWeatherType = getWeather();
-        return soundPath(currWeatherType);
+
+        return soundPath();
     }
 
     public Uri getRainPath(){
-        WeatherTypes currWeatherType = WeatherTypes.RAIN;
-        return soundPath(currWeatherType);
+
+        return soundPath();
     }
 }
