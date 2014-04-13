@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import android.app.Activity;
 import java.io.File;
 import java.io.InputStream;
 
@@ -14,14 +15,14 @@ import java.io.InputStream;
  *
  *
  */
-public class Generator {
+public class Generator extends Activity{
 
     //Get the context using the getContext instruction, the filename is the name of the wave file
     //for example if file is "rainy.wav" parameter would be "rainy"
-    public void generateHeader(Wave wavFile, Context con, String fileName) {
+    public void generateHeader(Wave wavFile, Uri uriPath) {
 
-        InputStream in;
-       // File wave = new File(fileName.getPath());
+        FileInputStream in;
+        File wave = new File(uriPath.toString());
         char firstByte;
         char secondByte;
         char thirdByte;
@@ -31,7 +32,7 @@ public class Generator {
         try {
 
 
-            in = con.getResources().openRawResource(con.getResources().getIdentifier(fileName, "raw", con.getPackageName()));;
+            in = new FileInputStream(wave);
 
             wavFile.RIFF[0] = (char) in.read();
 
@@ -183,9 +184,8 @@ public class Generator {
 
     }
 
-    public void overlay(Wave baseWave, Wave soundBite, Context con, int insertTime) {
+    public void overlay(Wave baseWave, Wave soundBite, int insertTime) {
 
-        //File outputFile = new File("res/output.wav");
         FileOutputStream out;
         int startClip;
         char[] holdE2 = new char[2];
@@ -194,7 +194,7 @@ public class Generator {
 
         try {
 
-            out = con.openFileOutput("music/output.wav",con.MODE_PRIVATE);
+            out = openFileOutput("output.wav", Context.MODE_PRIVATE);
 
             out.write(baseWave.RIFF[0]);
 
