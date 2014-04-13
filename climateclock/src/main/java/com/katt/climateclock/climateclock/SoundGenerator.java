@@ -113,7 +113,7 @@ public class SoundGenerator {
     private String randomSoundFromDirectory(String[] resources)
     {
         Random randomGenerator = new Random();
-        return resources[randomGenerator.nextInt()];
+        return resources[randomGenerator.nextInt(resources.length)];
     }
 
     public float getTemp(){
@@ -165,11 +165,11 @@ public class SoundGenerator {
      */
     private Uri soundPath(WeatherTypes weatherCondition){
         if(weatherCondition == WeatherTypes.RAIN){
-            return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" +
-                    randomSoundFromDirectory(soundResources.rain));
+            return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
+                    randomSoundFromDirectory(soundResources.rain)));
         }
-        return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" +
-                randomSoundFromDirectory(soundResources.rain));
+        return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
+                randomSoundFromDirectory(soundResources.rain)));
     }
 
     /*
