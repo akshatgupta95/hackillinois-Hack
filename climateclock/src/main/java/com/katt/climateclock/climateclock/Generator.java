@@ -1,4 +1,5 @@
 package com.katt.climateclock.climateclock;
+import android.content.Context;
 import android.net.Uri;
 
 import java.io.FileInputStream;
@@ -15,12 +16,13 @@ import java.io.InputStream;
  */
 public class Generator {
 
-    public void generateHeader(Wave wavFile, Uri fileName) {
+    //Get the context using the getContext instruction, the filename is the name of the wave file
+    //for example if file is "rainy.wav" parameter would be "rainy"
+    public void generateHeader(Wave wavFile, Context con, String fileName) {
 
-        FileInputStream in;
-        File wave = new File(fileName.getPath());
+        InputStream in;
+       // File wave = new File(fileName.getPath());
         char firstByte;
-
         char secondByte;
         char thirdByte;
         char fourthByte;
@@ -28,7 +30,8 @@ public class Generator {
 
         try {
 
-            in = new FileInputStream(wave);
+
+            in = con.getResources().openRawResource(con.getResources().getIdentifier(fileName, "raw", con.getPackageName()));;
 
             wavFile.RIFF[0] = (char) in.read();
 
@@ -180,9 +183,9 @@ public class Generator {
 
     }
 
-    public void overlay(Wave baseWave, Wave soundBite, int insertTime) {
+    public void overlay(Wave baseWave, Wave soundBite, Context con, int insertTime) {
 
-        File outputFile = new File("res/output.wav");
+        //File outputFile = new File("res/output.wav");
         FileOutputStream out;
         int startClip;
         char[] holdE2 = new char[2];
@@ -191,12 +194,7 @@ public class Generator {
 
         try {
 
-            out = new FileOutputStream(outputFile);
-
-            if (!outputFile.exists()) {
-                outputFile.createNewFile();
-            }
-
+            out = con.openFileOutput("music/output.wav",con.MODE_PRIVATE);
 
             out.write(baseWave.RIFF[0]);
 
