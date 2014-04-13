@@ -192,9 +192,8 @@ public class SoundGenerator {
             return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
                     randomSoundFromDirectory(soundResources.bird)));
         }
-
         return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                randomSoundFromDirectory(soundResources.rain)));;
+                randomSoundFromDirectory(soundResources.rain)));
     }
 
     /*
