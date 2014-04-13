@@ -136,7 +136,7 @@ public class SoundGenerator {
     /*
      * Generate the sound.
      */
-    public void generate()
+    public Uri generate()
     {
         Generator generationer = new Generator();
 
@@ -179,6 +179,7 @@ public class SoundGenerator {
 
             i++;
         }
+        return Uri.parse(file.toString());
     }
 
     /*
