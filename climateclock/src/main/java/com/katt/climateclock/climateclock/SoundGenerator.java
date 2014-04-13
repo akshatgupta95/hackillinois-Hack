@@ -166,6 +166,20 @@ public class SoundGenerator {
 
             i++;
         }
+
+        File file = new File("/music/output.wav");
+        Wave output = new Wave();
+        generationer.generateHeader(output, Uri.parse(file.toString()));
+
+
+        while(i < time.length) {
+
+            Wave birdTemp = new Wave();
+            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD) );
+            generationer.overlay(output, birdTemp, time[i]);
+
+            i++;
+        }
     }
 
     /*
