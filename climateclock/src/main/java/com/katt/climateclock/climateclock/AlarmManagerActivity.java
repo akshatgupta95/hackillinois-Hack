@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,7 @@ public class AlarmManagerActivity extends Activity{
             public void onClick(View view) {
                 try
                 {
+
                     int h = mTimePicker.getCurrentHour();
                     int m = mTimePicker.getCurrentMinute();
                     Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
@@ -89,7 +91,7 @@ public class AlarmManagerActivity extends Activity{
         mStopBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 3,
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmManagerActivity.this, 0,
                             intent, 0);
 
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);

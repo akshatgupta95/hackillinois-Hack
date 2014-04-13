@@ -1,4 +1,7 @@
 package com.katt.climateclock.climateclock;
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.provider.Settings;
 
 import it.octograve.weatherlib.*;
@@ -21,10 +24,10 @@ import de.jartist.weather.wunderground.impl.services.HttpDataReaderService;
  * Created by Thomas on 4/12/14. A class that can generate a sound
  * file by layering sounds. It also fetches the weather.
  */
-public class SoundGenerator {
+public class SoundGenerator extends Activity{
     private class Sounds{
-        String[] rain = {"chirp", "chirp1", "chirp2", "chirp3", "chirp4", "chirp5", "chirp6", "chirp7", "chirp8", "chirp9", "chirp10", "chirp11"};
-        String[] bird = {"birds", "birds2", "birds3", "birds4"};
+        String[] bird = {"chirp", "chirp1", "chirp2", "chirp3", "chirp4", "chirp5", "chirp6", "chirp7", "chirp8", "chirp9", "chirp10", "chirp11"};
+        String[] rain = {"birds", "birds2", "birds3", "birds4"};
         String[] sunny = {"sunny"};
         String[] wind = {"wind", "snow"};
     }
@@ -51,10 +54,10 @@ public class SoundGenerator {
         return result;
     }
 
-    public SoundGenerator(){
+    private Context context;
 
-
-
+    public SoundGenerator(Context context){
+        this.context = context;
     }
 
     /*
@@ -136,37 +139,41 @@ public class SoundGenerator {
     /*
      * Generate the sound.
      */
-    public Uri generate()
+    public Uri generate(Resources res, String name, Context otherContext)
     {
         Generator generationer = new Generator();
 
         Wave base = new Wave();
         Wave bird1 = new Wave();
 
-        generationer.generateHeader(base, "empty" );
-        generationer.generateHeader(bird1, soundPath(Weathers.BIRD) );
-        generationer.overlay(base, bird1, 4);
 
-        int[] time = new int[40];
 
-        time = generateTimes(50,40);
+        generationer.generateHeader(base, "emptystereo", res, name, otherContext);
+        System.out.println(soundPath(Weathers.BIRD));
+        generationer.generateHeader(bird1, soundPath(Weathers.BIRD) , res, name, otherContext);
+        generationer.overlay(base, bird1, 4, otherContext);
+
+        int[] time;
+
+        time = generateTimes(50,10);
 
         int i = 0;
 
-        File file = new File("/music/output.wav");
+        File file = new File("output.wav");
         Wave output = new Wave();
         generationer.generateHeader(output, Uri.parse(file.toString()));
 
 
         while(i < time.length) {
-
+            System.out.println(i);
             Wave birdTemp = new Wave();
-            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD) );
-            generationer.overlay(output, birdTemp, time[i]);
+            System.out.println(soundPath(Weathers.BIRD));
+            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD), res, name, otherContext);
+            generationer.overlay(output, birdTemp, time[i], otherContext);
             i++;
         }
 
-        file = new File("/music/output.wav");
+        file = new File("output.wav");
         output = new Wave();
         generationer.generateHeader(output, Uri.parse(file.toString()));
 
@@ -174,8 +181,8 @@ public class SoundGenerator {
         while(i < time.length) {
 
             Wave birdTemp = new Wave();
-            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD) );
-            generationer.overlay(output, birdTemp, time[i]);
+            generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD), res, name, otherContext);
+            generationer.overlay(output, birdTemp, time[i], otherContext);
 
             i++;
         }
@@ -201,7 +208,7 @@ public class SoundGenerator {
         if (weatherType == Weathers.BIRD) {
             return randomSoundFromDirectory(soundResources.bird);
         }
-        return randomSoundFromDirectory(soundResources.rain);
+        return randomSoundFromDirectory(soundResources.bird);
     }
 
     /*

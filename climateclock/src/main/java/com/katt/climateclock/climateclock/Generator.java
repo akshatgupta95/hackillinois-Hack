@@ -1,11 +1,15 @@
 package com.katt.climateclock.climateclock;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import android.app.Activity;
+import android.os.Bundle;
+
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -16,12 +20,25 @@ import java.io.InputStream;
  *
  */
 public class Generator extends Activity{
+    //private static Context context;
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        //Generator.context = getApplicationContext();
+    }
 
     //Get the context using the getContext instruction, the filename is the name of the wave file
     //for example if file is "rainy.wav" parameter would be "rainy"
-    public void generateHeader(Wave wavFile, String path) {
-
-        InputStream in = getResources().openRawResource(getResources().getIdentifier(path,"raw", getPackageName()));
+    public void generateHeader(Wave wavFile, String path, Resources res, String packageName, Context context) {
+        //Resources f = getResources();
+        //int test = getResources().getIdentifier(path,"raw", getPackageName());
+        //System.out.println(test);
+        //Resources f = getResources();
+        //String bla = getPackageName();
+        //System.out.println(bla);
+        res = context.getResources();
+        InputStream in = res.openRawResource(res.getIdentifier(path,"raw", packageName));
         char firstByte;
         char secondByte;
         char thirdByte;
@@ -194,7 +211,7 @@ public class Generator extends Activity{
 
         try {
 
-            in = 
+            in = new FileInputStream(wave);
 
             wavFile.RIFF[0] = (char) in.read();
 
@@ -346,7 +363,7 @@ public class Generator extends Activity{
 
     }
 
-    public void overlay(Wave baseWave, Wave soundBite, int insertTime) {
+    public void overlay(Wave baseWave, Wave soundBite, int insertTime, Context context) {
 
         FileOutputStream out;
         int startClip;
@@ -356,7 +373,7 @@ public class Generator extends Activity{
 
         try {
 
-            out = openFileOutput("Music/output.wav", Context.MODE_PRIVATE);
+            out = context.openFileOutput("output.wav", 0);
 
             out.write(baseWave.RIFF[0]);
 
@@ -481,11 +498,15 @@ public class Generator extends Activity{
             }
 
 
-        } catch (Exception e ) {
-
-            System.out.println("Error!");
-            e.printStackTrace();
         }
+        catch (IOException e){
+            System.out.println("IO exception");
+        }
+//        catch (Exception e ) {
+//
+//            System.out.println("Error!");
+//            e.printStackTrace();
+//        }
 
 
         System.out.println("Output file created");

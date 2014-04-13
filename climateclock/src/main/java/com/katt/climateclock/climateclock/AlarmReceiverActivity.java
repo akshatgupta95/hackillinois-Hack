@@ -4,6 +4,7 @@ import java.io.IOException;
 import com.katt.climateclock.climateclock.MainActivity.*;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -17,6 +18,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.io.File;
@@ -82,9 +85,12 @@ public class AlarmReceiverActivity extends Activity {
         }
 
     private Uri getAlarmUri() {
-        SoundGenerator testAudio = new SoundGenerator();
+        SoundGenerator testAudio = new SoundGenerator(this);
         //Uri alert = testAudio.getSoundPath();
-        Uri alert = testAudio.generate();
+        Resources f = getResources();
+        String name = getPackageName();
+        InputStream in = f.openRawResource(f.getIdentifier("emptystereo","raw", name));
+        Uri alert = testAudio.generate(f, name, this);
         if (alert == null){
             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             if (alert == null)
