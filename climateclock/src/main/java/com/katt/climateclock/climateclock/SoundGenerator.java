@@ -23,7 +23,7 @@ public class SoundGenerator {
     /*
      * Holds all the sound bindings.
      */
-    Sounds soundResources;
+    Sounds soundResources = new Sounds();
 
     /*
      * Declaring a station so that it can be used throughout the class

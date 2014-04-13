@@ -32,6 +32,7 @@ public class AlarmManagerActivity extends Activity{
         mTimePicker = (TimePicker) findViewById(R.id.timePicker);
         mTimePicker.setIs24HourView(true);
         mStartBtn = (Button) findViewById(R.id.btnSetAlarm);
+        mStopBtn = (Button) findViewById(R.id.btnStopAlarm);
 
 
         mStartBtn.setOnClickListener(new OnClickListener() {

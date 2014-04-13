@@ -96,7 +96,7 @@ public class AlarmReceiverActivity extends Activity {
             }
             return alert;
         }
-        return null;
+        return alert;
         }
         protected void onStop() {
             super.onStop();
