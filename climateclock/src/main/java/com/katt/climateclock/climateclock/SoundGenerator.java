@@ -19,6 +19,7 @@ import android.net.Uri;
 public class SoundGenerator {
     private class Sounds{
         String[] rain = {"rain", "snow"};
+        String[] bird = {"birds", "birds2", "birds3", "birds4"};
     }
     /*
      * Holds all the sound bindings.
