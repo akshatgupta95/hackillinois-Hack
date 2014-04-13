@@ -83,6 +83,12 @@ public class AlarmManagerActivity extends Activity{
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                 am.cancel(pendingIntent);
 
+                if (mToast == null)
+                {
+                    mToast = Toast.makeText(getApplicationContext(),
+                            "Alaram has not been set yet!", Toast.LENGTH_LONG);
+                    mToast.show();
+                }
                 if (mToast != null)
                     mToast.cancel();
                 mToast = Toast.makeText(getApplicationContext(),
