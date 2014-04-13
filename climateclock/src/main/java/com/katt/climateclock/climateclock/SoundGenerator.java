@@ -41,6 +41,16 @@ public class SoundGenerator {
 
     }
 
+    private int[] generateTimes(int end, int density)
+    {
+        int[] result = new int[density];
+        Random randomGenerator = new Random();
+        for (int ii = 0; ii < result.length; ii++){
+            result[ii] = randomGenerator.nextInt(end + 1);
+        }
+        return result;
+    }
+
     public SoundGenerator(){
 
 
@@ -104,7 +114,7 @@ public class SoundGenerator {
     private String randomSoundFromDirectory(String[] resources)
     {
         Random randomGenerator = new Random();
-        return resources[randomGenerator.nextInt(resources.length)];
+        return resources[randomGenerator.nextInt(resources.length) + 1];
     }
 
     public float getTemp(){
