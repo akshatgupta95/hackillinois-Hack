@@ -194,7 +194,7 @@ public class Generator extends Activity{
 
         try {
 
-            out = openFileOutput("output.wav", Context.MODE_PRIVATE);
+            out = openFileOutput("Music/output.wav", Context.MODE_PRIVATE);
 
             out.write(baseWave.RIFF[0]);
 
