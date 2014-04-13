@@ -28,7 +28,7 @@
         android:id="@+id/btnStopAlarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/nice_button"
+        android:background="@drawable/nice_button2"
         android:text="Stop Alarm"
         android:layout_below="@+id/btnSetAlarm"
         />
