@@ -166,8 +166,8 @@ public class SoundGenerator {
             i++;
         }
 
-        File file = new File("/music/output.wav");
-        Wave output = new Wave();
+        file = new File("/music/output.wav");
+        output = new Wave();
         generationer.generateHeader(output, Uri.parse(file.toString()));
 
 
@@ -205,7 +205,7 @@ public class SoundGenerator {
                     randomSoundFromDirectory(soundResources.bird)));
         }
         return Uri.parse(String.format("android.resource://com.katt.climateclock.climateclock/raw/%s",
-                randomSoundFromDirectory(soundResources.rain)));;
+                randomSoundFromDirectory(soundResources.rain)));
     }
 
     /*
@@ -215,11 +215,11 @@ public class SoundGenerator {
      */
     public Uri getSoundPath(){
 
-        return soundPath();
+        return soundPath(Weathers.RAIN);
     }
 
     public Uri getRainPath(){
 
-        return soundPath();
+        return soundPath(Weathers.BIRD);
     }
 }
