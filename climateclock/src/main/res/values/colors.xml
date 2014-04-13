@@ -10,4 +10,5 @@
     <color name="NiceButtonDisabledStartColor2">#565051</color>
     <color name="NiceButtonDisabledEndColor2">#736F6E</color>
     <color name="NiceButtonBorderColor2">#520000</color>
+    <color name="White">#FFFFFF</color>
 </resources>

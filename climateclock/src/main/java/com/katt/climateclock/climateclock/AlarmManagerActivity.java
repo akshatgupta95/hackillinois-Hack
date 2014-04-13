@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class AlarmManagerActivity extends Activity{
     private TimePicker mTimePicker;
     private Toast mToast;
     private Button mStopBtn;
+    private CheckBox mRepeatCheck;
 
     @Override
     public void onCreate(Bundle savedInstanceBundle)
@@ -52,8 +54,14 @@ public class AlarmManagerActivity extends Activity{
                     calendar.set(Calendar.MINUTE, m);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*1, pendingIntent);
-
+                    if (!mRepeatCheck.isChecked())
+                    {
+                        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    }
+                    else
+                    {
+                        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*3600*24, pendingIntent);
+                    }
 
                     if (mToast != null)
                         mToast.cancel();
@@ -81,7 +89,7 @@ public class AlarmManagerActivity extends Activity{
                             intent, 0);
 
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                am.cancel(pendingIntent);
+
 
                 if (mToast == null)
                 {
@@ -90,7 +98,10 @@ public class AlarmManagerActivity extends Activity{
                     mToast.show();
                 }
                 if (mToast != null)
+                {
                     mToast.cancel();
+                    am.cancel(pendingIntent);
+                }
                 mToast = Toast.makeText(getApplicationContext(),
                     "Alarm has been dicontinued", Toast.LENGTH_LONG);
                 mToast.show();

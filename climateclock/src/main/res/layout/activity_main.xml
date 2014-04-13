@@ -32,6 +32,13 @@
         android:text="Stop Alarm"
         android:layout_below="@+id/btnSetAlarm"
         />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:id="@+id/repeatCheck"
+        android:layout_below="@id/btnStopAlarm"
+        android:text="Repeat Alarm"/>
 
 
 </RelativeLayout>
