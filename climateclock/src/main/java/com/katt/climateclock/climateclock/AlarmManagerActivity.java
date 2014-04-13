@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import java.util.Calendar;
 
 /**
  * Created by Kevin on 4/12/14.
@@ -41,10 +42,16 @@ public class AlarmManagerActivity extends Activity{
                     Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
                         intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                    int ms = (h * 3600 * 1000) + (m * 60 * 1000);
+//                    int ms = (h * 3600 * 1000) + (m * 60 * 1000);
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.set(Calendar.HOUR_OF_DAY, h);
+                    calendar.set(Calendar.MINUTE, m);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    am.setExact(AlarmManager.RTC_WAKEUP, (long) ms, pendingIntent);
+                    am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*1, pendingIntent);
+
 
                     if (mToast != null)
                         mToast.cancel();
