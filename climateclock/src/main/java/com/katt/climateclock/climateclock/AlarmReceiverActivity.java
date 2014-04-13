@@ -62,8 +62,8 @@ public class AlarmReceiverActivity extends Activity {
 
             try
             {
-                Uri soundPath = Uri.fromFile(new File(testAudio.getRainPath()));
-                mMediaPlayer.setDataSource(context, soundPath);
+//                Uri soundPath = Uri.fromFile(new File(testAudio.getRainPath()));
+                mMediaPlayer.setDataSource(context, alert);
                 final AudioManager audioManager =
                         (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 if(audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0)
