@@ -163,7 +163,6 @@ public class SoundGenerator {
             Wave birdTemp = new Wave();
             generationer.generateHeader(birdTemp, soundPath(Weathers.BIRD) );
             generationer.overlay(output, birdTemp, time[i]);
-
             i++;
         }
 
