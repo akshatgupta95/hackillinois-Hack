@@ -23,5 +23,15 @@
         android:layout_below="@+id/timePicker"
         />
 
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnStopAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nice_button"
+        android:text="Stop Alarm"
+        android:layout_below="@+id/btnSetAlarm"
+        />
+
 
 </RelativeLayout>

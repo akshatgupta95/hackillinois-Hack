@@ -21,6 +21,9 @@ public class AlarmManagerActivity extends Activity{
     private Button mStartBtn;
     private TimePicker mTimePicker;
     private Toast mToast;
+    private Button mStopBtn;
+    private AlarmManager am;
+    private PendingIntent pendingIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceBundle)
@@ -40,7 +43,7 @@ public class AlarmManagerActivity extends Activity{
                     int h = mTimePicker.getCurrentHour();
                     int m = mTimePicker.getCurrentMinute();
                     Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
+                    pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
                         intent, PendingIntent.FLAG_CANCEL_CURRENT);
 //                    int ms = (h * 3600 * 1000) + (m * 60 * 1000);
 
@@ -49,7 +52,7 @@ public class AlarmManagerActivity extends Activity{
                     calendar.set(Calendar.HOUR_OF_DAY, h);
                     calendar.set(Calendar.MINUTE, m);
 
-                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    am = (AlarmManager) getSystemService(ALARM_SERVICE);
                     am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*1, pendingIntent);
 
 
@@ -69,8 +72,28 @@ public class AlarmManagerActivity extends Activity{
                     Log.i("AlarmManagerActivity", "Number Format Exception");
                 }
 
+            }
+        });
+
+        mStartBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
 
 
+//                    Intent intent = new Intent(AlarmManagerActivity.this, AlarmReceiverActivity.class);
+//                    PendingIntent pendingIntent = PendingIntent.getActivity(AlarmManagerActivity.this, 2,
+//                            intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//                    int ms = (h * 3600 * 1000) + (m * 60 * 1000);
+
+                    if (mToast != null){
+                        mToast = Toast.makeText(getApplicationContext(),
+                                "Alarm has been discontinued", Toast.LENGTH_LONG);
+                         mToast.show();
+                    } else mToast.cancel();
+
+
+                    if(am != null){
+                        am.cancel(pendingIntent);
+                    }
             }
         });
 
