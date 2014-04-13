@@ -58,7 +58,7 @@ public class AlarmReceiverActivity extends Activity {
         private void playSound(Context context, Uri alert) {
             mMediaPlayer = new MediaPlayer();
 
-            SoundGenerator testAudio = new SoundGenerator();
+
 
             try
             {
@@ -81,19 +81,23 @@ public class AlarmReceiverActivity extends Activity {
 
         }
 
-        private Uri getAlarmUri() {
-            Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+    private Uri getAlarmUri() {
+        SoundGenerator testAudio = new SoundGenerator();
+        Uri alert = testAudio.getRainPath();
+        if (alert == null){
+            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             if (alert == null)
             {
                 alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 if (alert == null)
                 {
-                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                    alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
                 }
             }
             return alert;
         }
-
+        return null;
+        }
         protected void onStop() {
             super.onStop();
             mWakeLock.release();
