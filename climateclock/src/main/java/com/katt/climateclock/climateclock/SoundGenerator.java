@@ -17,6 +17,13 @@ import android.net.Uri;
  * file by layering sounds. It also fetches the weather.
  */
 public class SoundGenerator {
+    private class Sounds{
+        String[] rain = {"Rain", "Snow"};
+    }
+    /*
+     * Holds all the sound bindings.
+     */
+    Sounds soundResources;
 
     /*
      * Declaring a station so that it can be used throughout the class
@@ -103,16 +110,10 @@ public class SoundGenerator {
      * @param A string representing the path to the directory.
      * @Return A string representing the path to the specific music file.
      */
-    private Uri randomSoundFromDirectory(Uri directoryPath)
+    private String randomSoundFromDirectory(String[] resources)
     {
-        List<Uri> fileList = new ArrayList<String>();
-
-        Field[] fields=R.class.getFields();
-        for(int count=0; count < fields.length; count++){
-            Log.i("Raw Asset: ", fields[count].getName());
-        }
         Random randomGenerator = new Random();
-        return fileList.get(randomGenerator.nextInt(fileList.size()));
+        return resources[randomGenerator.nextInt()];
     }
 
     public float getTemp(){
@@ -164,9 +165,11 @@ public class SoundGenerator {
      */
     private Uri soundPath(WeatherTypes weatherCondition){
         if(weatherCondition == WeatherTypes.RAIN){
-            return randomSoundFromDirectory(Uri.parse("android.resource://com.katt.climateclock.climateclock/sound.Rain"));
+            return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw" +
+                    randomSoundFromDirectory(soundResources.rain));
         }
-        return randomSoundFromDirectory(Uri.parse("android.resource://com.katt.climateclock.climateclock/raw/" + sring[2]));
+        return Uri.parse("android.resource://com.katt.climateclock.climateclock/raw" +
+                randomSoundFromDirectory(soundResources.rain));
     }
 
     /*
