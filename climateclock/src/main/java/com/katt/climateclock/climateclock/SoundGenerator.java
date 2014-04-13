@@ -23,8 +23,10 @@ import de.jartist.weather.wunderground.impl.services.HttpDataReaderService;
  */
 public class SoundGenerator {
     private class Sounds{
-        String[] rain = {"rain", "snow"};
+        String[] rain = {"rain"};
         String[] bird = {"birds", "birds2", "birds3", "birds4"};
+        String[] sunny = {"sunny"};
+        String[] wind = {"wind", "snow"};
     }
     /*
      * Holds all the sound bindings.
